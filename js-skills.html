@@ -686,37 +686,72 @@
 <script>
   "use strict";
 
+    // Declare and initialize an array containing the circle colors.
     var PRIME_COLORS = ['orange', 'midnightblue', 'darkgoldenrod', 'green', 'purple'];
 
+    // Declare an array to contain the primes we'll store. This is in the global
+    // scope because all functions need access too it. **TODO: FIND A BETTER WAY**
     var primes = [];
 
+    // A function that takes an integer n as an argument and populates the primes 
+    // list with all prime numbers less than or equal to that integer.
     function primesUpToN(n) {
+
+        // Iterate over all numbers up to and including n. The variable i
+        // is both an iteration tracker and the prime number we're currently
+        // checking.
         for (var i = 0; i <= n; i++){
+
+          // If the current number is 1 or less, it's not prime. Skip.
           if (i <= 1) {
             console.log(i + " is not prime.");
           }
+
+          // If the current number is greater than 1 but less than or equal
+          // to 3, it's prime. (That is, it's 2 or 3.) Add it to primes.
           else if (i <= 3) {
             console.log(i + " is prime!");
             primes.push(i);
           }
+
+          // If we're past 2 and 3, then check whether the number is divisible
+          // by 2 or 3. If so, it isn't prime. Skip.
           else if ((i % 2 === 0) || (i % 3 === 0)) {
             console.log(i + " is not prime.");
           }
 
+          // Otherwise, we need to do some acrobatics to check numbers 5 and
+          // larger.
           else {
-            var j = 5;
-            while (j < i) {
-              if (i % j === 0) {
+
+            // Declare and initialize a new variable to 5, the lowest prime that
+            // we haven't checked against yet.
+            var currentNumToCompare = 5;
+
+            // As long as we're comparing i to a number smaller than itself,
+            // keep comparing. 
+            while (currentNumToCompare < i) {
+
+              // If the number we're comparing i to divides evenly into i,
+              // then i is not prime. Skip and leave the while loop.
+              if (i % currentNumToCompare === 0) {
                 console.log(i + " is not prime.");
                 break;
               }
 
+              // Otherwise, increment the number to compare against, and loop
+              // again.
               else {
-                j++;
+                currentNumToCompare++;
               }
             }
 
-            if (j === i) {
+            // After the while loop ends, if we left the loop early because we
+            // found that i is not prime, then currentNumToCompare should be less 
+            // than i. If the two numbers are equal, that means i is prime. Add it
+            // to primes. (currentNumToCompare should never reach a value greater
+            // than i.)
+            if (currentNumToCompare === i) {
                console.log(i + " is prime!");
                primes.push(i);
             }
@@ -724,25 +759,57 @@
         }
     }
 
+    // Declare variables to let us index into our primes array and tell us
+    // when we have a full row. 
     var indexIntoPrimes;
     var rowEndIndex;
 
+    // Add an event listener to the button #get-number-to-stop-at. This executes
+    // the passed callback on a click.
     $("#get-number-to-stop-at").on("click", function() {
+
+        // Ask the user how high we should go when calculating primes.
         var numberToStopAt = prompt("Sure, give me a number to stop at.");
         numberToStopAt = parseInt(numberToStopAt, 10);
+
+        // Calculate the primes up to the user's number, and populate the primes
+        // array.
         primesUpToN(numberToStopAt);
+
+        // Disable the "Give me primes!" button, enable the "Show more please!"
+        // button.
         $("#get-number-to-stop-at").prop("disabled", true);
         $("#make-prime-boxes").prop("disabled", false);
+
+        // Clean up after the last prime fetch. Clear the div contents, reset
+        // indexIntoPrimes, and reset rowEndIndex.
         $("#prime-box-area").text("");
         indexIntoPrimes = 0;
         rowEndIndex = 4;
     });
 
+    // Add an event listener to the "make-prime-boxes" button, labeled "Show more please!"
+    // Fires callback on click.
     $("#make-prime-boxes").on("click", function() {
+
+        // Declare and initialize an index we can use to access PRIME_COLORS. This
+        // variable belongs here because every time this button's click event fires,
+        // it should be reset to 0.
         var colorIndex = 0;
+
+        // Iterate over a group of elements in the primes array, determined by
+        // the value of rowEndIndex. (This is set to 4 in the get-number-to-stop-at
+        // callback because we want rows of 5 numbers.)
         for (indexIntoPrimes; indexIntoPrimes <= rowEndIndex; indexIntoPrimes++) {
 
+            // If the current index is greater than or equal to the length of the
+            // primes array, then we're done.
             if (indexIntoPrimes >= primes.length) {
+
+                // Disable the "show more please!" button, tell the user
+                // they're out of primes, and enable the "Give me primes!"
+                // button. Reset primes to an empty array. Break out of the
+                // display loop.
                 $("#make-prime-boxes").prop("disabled",true);
                 $("#prime-box-area").append("That's all you get!");
                 $("#get-number-to-stop-at").prop("disabled", false);
@@ -750,24 +817,38 @@
                 break;
             }
 
+            // Otherwise, display some primes!
             else {
+
+                // Create a new prime box, color it, and set its text to the
+                // current prime number.
                 var nextPrimeBox = document.createElement("div");
                 nextPrimeBox.className="prime-box";
                 nextPrimeBox.style="background-color: " + PRIME_COLORS[colorIndex];
                 nextPrimeBox.innerText=primes[indexIntoPrimes];
 
+                // Add the prime box we just made to the #prime-box-area div.
                 $("#prime-box-area").append(nextPrimeBox);
+
+                // Increment the index into PRIME_COLORS so we can color the next
+                // box appropriately.
                 colorIndex++;
 
                 console.log("I'M IN THE FOR LOOP");
             }
         }
+
+        // After a row is done, add some line breaks for a more pleasing visual.
         $("#prime-box-area").append("<br><br>")
 
+        // Increase the rowEndIndex by the number of elements you want in a row.
+        // This is hardcoded right now, but ideally, we'd want to have a variable
+        // somewhere instead of adding 5 every time.
         rowEndIndex = rowEndIndex + 5;
 
         console.log("I'm not in the for loop but I am in the callback.")
 
+        // Why doesn't this get me out of the callback????
         return;
 
     });
