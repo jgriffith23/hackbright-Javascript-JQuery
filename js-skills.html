@@ -594,70 +594,26 @@
   "use strict";
   // put your code here
 
-  // Add an event listener to the "Play!" button that will execute the passed
-  // callback on a click. The callback is currently anonymous, mostly for practice.
-  // In retrospect, it may be complex enough to be worth writing a separate one.
+  var guess, randNum;
 
-  var randNum;
-  function randomNumberGame() {
-
-    // Generate a random number between 1 and 100. Math.random() gets a number
-    // between 0 and 1, not inclusive. Multiply by 100 to map that number to 
-    // the desired range, and add 1 so that it doesn't hit 0 and can hit 100.
+  $("#play-guessing-game-2").on("click", function() {
+    $("#play-guessing-game-2").prop("disabled", true);
+    $("#number-guessed").prop("disabled", false);
+    $("#try-this-number").prop("disabled", false); 
     randNum = Math.floor(Math.random() * 100 + 1);
-    console.log(randNum);
+    console.log("LOOK AT THIS RANDOM THING I MADE " + randNum);     
+  });
 
-    // Get the player's guess.
-    var guess = prompt("Guess my number! It's an integer between 1 and 100.");
-    console.log(guess.indexOf("."));
-
-    // 
-    if (guess.indexOf(".") !== -1) {
-
-        var guessInvalid = true;
-        while (guessInvalid) {
-            guess = prompt("Hey, I said integers! Quit guessing floats. Try again.");
-
-            if (guess.indexOf(".") === -1) {
-
-                guessInvalid = false;
-            }
-        }
-
-    }
-    
-    // Convert guess to an integer from a string. Use a 
-    // radix of 10 to ensure that JS knows we're in decimal.
+  $("#try-this-number").on("click", function(event) {
+    event.preventDefault();
+    guess = $("#number-guessed").val();
     guess = parseInt(guess, 10);
+    console.log(guess);
+    console.log("HEY I'M INSIDE THE TRY-THIS-NUMBER CALLBACK OMG");
+  });
 
-    // Set state variable so we can continue guessing.
-    var guessing = true;
-
-    // While the player is still guessing...
-    while (guessing) {
-
-
-
-        // Compare the guess to the actual number. Display a hint based on
-        // whether the guess is too high or too low. If it's neither too high
-        // nor too low, it must be correct!
-        if (guess > randNum) {
-            guess = parseInt(prompt("Too high! Guess again."));
-        }
-
-        else if (guess < randNum) {
-            guess = parseInt(prompt("Too low! Guess again."));
-        }
-
-        else if (guess === randNum) {
-            alert("You got it right! Have a cookie! :)");
-            guessing = false;
-        }
-    }
-
-  }
-
-  $("#play-guessing-game-2").on("click", randomNumberGame);
+  console.log("HEY I'M BACK IN NORMAL EXECUTION LAND WOO");
+  console.log("guess");
 
 
 </script>
