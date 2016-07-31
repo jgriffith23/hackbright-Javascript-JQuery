@@ -687,6 +687,73 @@
 
     var PRIME_COLORS = ['orange', 'midnightblue', 'darkgoldenrod', 'green', 'purple'];
 
+    var primes = [];
+
+    function primesUpToN(n) {
+        for (var i = 0; i <= n; i++){
+          if (i <= 1) {
+            console.log(i + " is not prime.");
+          }
+          else if (i <= 3) {
+            console.log(i + " is prime!");
+            primes.push(i);
+          }
+          else if ((i % 2 === 0) || (i % 3 === 0)) {
+            console.log(i + " is not prime.");
+          }
+
+          else {
+            var j = 5;
+            while (j < i) {
+              if (i % j === 0) {
+                console.log(i + " is not prime.");
+                break;
+              }
+
+              else {
+                j++;
+              }
+            }
+
+            if (j === i) {
+               console.log(i + " is prime!");
+               primes.push(i);
+            }
+          } 
+        }
+    }
+
+    primesUpToN(71);
+    var indexIntoPrimes = 0;
+    var maxIndex = 4;
+
+    $("#make-prime-boxes").on("click", function() {
+        var colorIndex = 0;
+        for (indexIntoPrimes; indexIntoPrimes <= maxIndex; indexIntoPrimes++) {
+            var nextPrimeBox = document.createElement("div");
+            nextPrimeBox.className="prime-box";
+            nextPrimeBox.style="background-color: " + PRIME_COLORS[colorIndex];
+            nextPrimeBox.innerText=primes[indexIntoPrimes];
+            $("#prime-box-area").append(nextPrimeBox);
+            colorIndex++;
+            console.log("I'M IN THE FOR LOOP");
+        }
+        $("#prime-box-area").append("<br><br>")
+
+        maxIndex = maxIndex + 5;
+
+        console.log("I'm not in the for loop but I am in the callback.")
+
+        if (indexIntoPrimes === primes.length) {
+            $("#make-prime-boxes").prop("disabled",true);
+            $("#prime-box-area").append("I'm out of numbers!");
+        }
+
+    });
+
+    console.log("Hey, I'm back in normal land!");
+
+
   // put the rest of your code here
 </script>
 
