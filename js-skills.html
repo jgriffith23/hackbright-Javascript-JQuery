@@ -596,25 +596,58 @@
 
   var guess, randNum;
 
+  // Event listener for "Play!" button. Callback is an anonymous function that
+  // disables play button, enables guess button and number field. Also generates
+  // the random number for the player to guess.
   $("#play-guessing-game-2").on("click", function() {
+
     $("#play-guessing-game-2").prop("disabled", true);
     $("#number-guessed").prop("disabled", false);
     $("#try-this-number").prop("disabled", false); 
+
     randNum = Math.floor(Math.random() * 100 + 1);
-    console.log("LOOK AT THIS RANDOM THING I MADE " + randNum);     
+    console.log("IGNORE THIS RANDOM THING I MADE " + randNum);     
   });
 
+  // Event listener for the "Guess" button. Anonymous callback function runs
+  // the game.
   $("#try-this-number").on("click", function(event) {
+
+    // First, stop us from going to a page that doesn't exist.
     event.preventDefault();
+
+    // Get guess string from the #number-guessed field. Turn it into a number.
     guess = $("#number-guessed").val();
     guess = parseInt(guess, 10);
-    console.log(guess);
-    console.log("HEY I'M INSIDE THE TRY-THIS-NUMBER CALLBACK OMG");
+    console.log("HEY HEY THIS WAS YOUR GUESS: " + guess);
+
+    // Compare the guess to the actual number. Display a hint in the based on
+    // whether the guess is too high or too low. If it's the right number,
+    // tell the user they got it right.
+    if (guess > randNum) {
+        console.log("HEY YO YOU GUESSED TOO HIGH AND I FIGURED IT OUT")
+        $("#number-guessing-msg").text("Too high! Guess again.");
+    }
+
+    else if (guess < randNum) {
+        console.log("HEY YO YOU GUESSED TOO LOW AND I FIGURED IT OUT")
+        $("#number-guessing-msg").text("Too low! Guess again.");
+    }
+
+    else if (guess === randNum) {
+        $("#number-guessing-msg").text("You got it! Have a cookie & play again! :)");
+
+        // Set the Play button, Guess button, and Guess field back to their
+        // original states.
+        $("#try-this-number").prop("disabled", true);
+        $("#number-guessed").prop("disabled", true);
+        $("#play-guessing-game-2").prop("disabled", false);
+    }
+
+    // Clear the Guess field for a new guess.
+    $("#number-guessed").val("");
+
   });
-
-  console.log("HEY I'M BACK IN NORMAL EXECUTION LAND WOO");
-  console.log("guess");
-
 
 </script>
 
