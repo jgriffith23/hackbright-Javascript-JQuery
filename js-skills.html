@@ -289,9 +289,21 @@
   <input type="button" class="tricky-to-find" value="Pop-Up Please!">
 </fieldset>
 
+<!-- Import jQuery -->
+<script src="https://code.jquery.com/jquery.js"></script>
+
 <script>
   "use strict";
   // code here for above problem
+
+  // Use jQuery to select elements with class tricky-to-find. Add an event listener
+  // to those elements that calls the passed callback on a click. The callback
+  // shows an alert. 
+  $(".tricky-to-find").on("click", function() {
+      alert("Yo, here's another sweet alert box. Dontcha like it?");
+  });
+
+
 </script>
 
 <div class="hint">
@@ -320,6 +332,15 @@
 <script>
   "use strict";
   // put your code here
+
+  // Use jQuery to select the element with id kittenz-rule. Add an event listener
+  // that waits for a double click on this element and executes the passed callback.
+  // Callback changes the src attribute of the elemnet to something involving a
+  // puppy. 
+  $("#kittenz-rule").on("dblclick", function () {
+    $("#kittenz-rule").attr("src", "http://25.media.tumblr.com/tumblr_m8gep1ExE81qzluq9o2_500.jpg");
+  });
+
 </script>
 
 <div class="hint">
@@ -354,6 +375,17 @@
 <script>
   "use strict";
   // put your code here
+
+  // Use jQuery to add an event listener to the element with id make-a-porcupine.
+  // The event listener waits for a click to call the callback.
+  $("#make-a-porcupine").on("click", function () {
+
+    // After waiting for 1 second (1000 ms) with the setTimeout function, this
+    // calls fadeIn() on the element with id cute-porcupine-image. To make the
+    // fade happen slowly, you can just use a really big number of milliseconds.
+    setTimeout( function() {$("#cute-porcupine-image").fadeIn(4000);}, 1000);
+  });
+
 </script>
 
 <div class="hint">
