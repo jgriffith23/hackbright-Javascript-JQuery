@@ -234,27 +234,38 @@
 <script>
   "use strict";
 
-//  Here's a stub of a function you can use!
+  //  Here's a stub of a function you can use!
 
- function reverseString() {
-   var msg = "Porcupines are cute";
+  // A function that reverses a string.
+  function reverseString() {
 
-   // do some stuff here to reverse that string into a new variable
-   var revMsg = [];
+      // Declare and initialize a variable containing the string to reverse.
+      var msg = "Porcupines are cute";
 
-   for (var i = msg.length - 1; i > -1; i--) {
-      revMsg.push(msg[i]);
-   }
+      // Declare a variable to contain the reversed string, and initialize it
+      // to an empty list.
+      var revMsg = [];
 
-   revMsg = revMsg.join("");
+      // Iterate over the characters in the original message, in reverse order.
+      for (var i = msg.length - 1; i > -1; i--) {
 
-   alert(revMsg);
-   
- }
+        // Add the characters to the reversed message list.
+        revMsg.push(msg[i]);
+      }
 
-// Here's a stub of event stuff you could use
+      // Once we have all the characters in the list, join them into one string.
+      revMsg = revMsg.join("");
 
+      // Display the reversed string on in an alert box.
+      alert(revMsg);
+     
+  }
+
+  // Declare a variable and bind it to the DOM element at id reverse-string-button.
   var reverseButton = document.getElementById("reverse-string-button");
+
+  // Place an event listener on the button, passing reverseString() as a callback.
+  // This event will fire when the button is clicked.
   reverseButton.addEventListener("click", reverseString);
 </script>
 
