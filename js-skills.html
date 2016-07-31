@@ -430,6 +430,33 @@
 <script>
   "use strict";
   // put your code here
+
+  // Declare a variable and bind it to the element with id agreeable-form.
+  // That should be an element containing a text input and a submit button.
+  var form = document.getElementById("agreeable-form");
+
+  // Declare a variable and bind it to the submit button.
+  var button = form.getElementsByTagName("input")[1];
+
+  // Add an event listener to the button that will fire an interrupt when the 
+  // button is clicked. Passing an anonymous function as the callback.
+  button.addEventListener("click", function(event) {
+
+    // If the user actually entered text, display an agreeable message.
+    if ($("#favorite-food-input").val() != ""){
+        var agreeableMsg = "I like " + $("#favorite-food-input").val() + ", too!";
+        $("#agreeable-text").text(agreeableMsg);
+    }
+
+    // Otherwise, the user clearly doesn't want to be agreed with. Show nothing.
+    else {
+        $("#agreeable-text").text("");
+    }
+
+    // Prevent the default behavior of the form submit, so we don't go to a page
+    // that doesn't exist. 
+    event.preventDefault();
+  });
 </script>
 
 <div class="hint">
