@@ -679,7 +679,8 @@
 
 <fieldset>
   <div id="prime-box-area"><!-- Your prime boxes should appear here! --></div>
-  <input type="button" id="make-prime-boxes" value="Button">
+  <input type="button" id="get-number-to-stop-at" value="Give me primes!">
+  <input type="button" id="make-prime-boxes" value="Show more please!" disabled>
 </fieldset>
 
 <script>
@@ -723,31 +724,51 @@
         }
     }
 
-    primesUpToN(71);
-    var indexIntoPrimes = 0;
-    var maxIndex = 4;
+    var indexIntoPrimes;
+    var rowEndIndex;
+
+    $("#get-number-to-stop-at").on("click", function() {
+        var numberToStopAt = prompt("Sure, give me a number to stop at.");
+        numberToStopAt = parseInt(numberToStopAt, 10);
+        primesUpToN(numberToStopAt);
+        $("#get-number-to-stop-at").prop("disabled", true);
+        $("#make-prime-boxes").prop("disabled", false);
+        $("#prime-box-area").text("");
+        indexIntoPrimes = 0;
+        rowEndIndex = 4;
+    });
 
     $("#make-prime-boxes").on("click", function() {
         var colorIndex = 0;
-        for (indexIntoPrimes; indexIntoPrimes <= maxIndex; indexIntoPrimes++) {
-            var nextPrimeBox = document.createElement("div");
-            nextPrimeBox.className="prime-box";
-            nextPrimeBox.style="background-color: " + PRIME_COLORS[colorIndex];
-            nextPrimeBox.innerText=primes[indexIntoPrimes];
-            $("#prime-box-area").append(nextPrimeBox);
-            colorIndex++;
-            console.log("I'M IN THE FOR LOOP");
+        for (indexIntoPrimes; indexIntoPrimes <= rowEndIndex; indexIntoPrimes++) {
+
+            if (indexIntoPrimes >= primes.length) {
+                $("#make-prime-boxes").prop("disabled",true);
+                $("#prime-box-area").append("That's all you get!");
+                $("#get-number-to-stop-at").prop("disabled", false);
+                primes = [];
+                break;
+            }
+
+            else {
+                var nextPrimeBox = document.createElement("div");
+                nextPrimeBox.className="prime-box";
+                nextPrimeBox.style="background-color: " + PRIME_COLORS[colorIndex];
+                nextPrimeBox.innerText=primes[indexIntoPrimes];
+
+                $("#prime-box-area").append(nextPrimeBox);
+                colorIndex++;
+
+                console.log("I'M IN THE FOR LOOP");
+            }
         }
         $("#prime-box-area").append("<br><br>")
 
-        maxIndex = maxIndex + 5;
+        rowEndIndex = rowEndIndex + 5;
 
         console.log("I'm not in the for loop but I am in the callback.")
 
-        if (indexIntoPrimes === primes.length) {
-            $("#make-prime-boxes").prop("disabled",true);
-            $("#prime-box-area").append("I'm out of numbers!");
-        }
+        return;
 
     });
 
