@@ -107,11 +107,11 @@
   // Add an event listener to the button, passing an anonymous function
   // as the callback. The anonymous function displays an alert when
   // the event fires, which happens on a click.
-  popupTrigger.addEventListener("click", 
-                                  function () {
-                                    alert("Hey, look at this sweet popup!");
-                                  }
-                                );
+  popupTrigger.addEventListener("click", function () {
+      alert("Hey, look at this sweet popup!");
+                                  
+  });
+
 </script>
 
 
@@ -126,11 +126,37 @@
   <i id="message-to-change">hello</i>
   <button id="change-hello-to-goodbye-button">Turn <b>Hello</b> Into <b>Goodbye</b></button>
   <!-- Hey, look, that was another way to do a button - what might it be good for? -->
+
+  <!-- It's good for when you want to use CSS or JS to operate on everything with a 
+       button tag, rather than just one particular button. /JGD -->
 </fieldset>
 
 <script>
   "use strict";
   // code here for above-problem
+
+  // Declare a variable and bind it to the element with id change-hello-to-goodbye-button.
+  // That element is the one that should trigger the text change.
+  var helloGoodbyeButton = document.getElementById("change-hello-to-goodbye-button");
+
+  // Declare a variable and bind it to the element with id message-to-change, which 
+  // is the tag containing the text we want to change.
+  var textToChange = document.getElementById("message-to-change");
+
+  // Add an event listener to the button that fires an event when the button is clicked.
+  // Pass a callback function that checks whether the text says "hello" and if it does,
+  // changes the text to "goodbye." Otherwise, it makes the text "hello." Yay toggles!
+  helloGoodbyeButton.addEventListener("click", function () {
+      if (textToChange.innerText.toLowerCase() === "hello") {
+          textToChange.innerText = "Goodbye";
+      }
+
+      else {
+          textToChange.innerText = "Hello";
+      }
+
+  });
+
 </script>
 
 <div class="hint">
@@ -161,6 +187,22 @@
 <script>
   "use strict";
   // code here for above problem
+
+  // Declare a variable and bind it to the element with id prevent-form-submission-button,
+  // which is the element that triggers a form submission to some-script. 
+  var tryToSubmitButton = document.getElementById("prevent-form-submission-button");
+
+  // Add an event listener to the button so that an event fires on a click. Pass an
+  // anonymous function as the callback.
+  tryToSubmitButton.addEventListener("click", function(event) {
+
+      // Show an alert.
+      alert("Hey, this page is like, not connected to anything dude. You don't\
+             want to be submitting that, I mean it. I'll just stop you, cool cool?");
+
+      // Prevent the default behavior, which should prevent the form submission. 
+      event.preventDefault();
+  });
 </script>
 
 <div class="hint">
